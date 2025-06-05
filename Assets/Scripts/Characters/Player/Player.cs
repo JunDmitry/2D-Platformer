@@ -1,4 +1,3 @@
-using Assets.Scripts.StateMachine.PlayerStateMachine;
 using Assets.Scripts.StateMachine.PlayerStates;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GroundDetector _groundDetector;
     [SerializeField] private PlayerAnimationEvents _animation;
 
-    private PlayerStateMachine _stateMachine;
+    private StateMachine _stateMachine;
 
     private void Start()
     {
@@ -17,11 +16,21 @@ public class Player : MonoBehaviour
         Jumper jumper = GetComponent<Jumper>();
 
         _stateMachine = new();
-        _stateMachine.AddState(new PlayerMovementState(_stateMachine, _inputReader, mover, _groundDetector, _animation));
-        _stateMachine.AddState(new PlayerJumpState(_stateMachine, jumper, _animation));
-        _stateMachine.AddState(new PlayerInAirState(_stateMachine, _inputReader, _groundDetector, _animation));
 
-        _stateMachine.ChangeState(PlayerStateType.Move);
+        State moveState = new PlayerMovementState(_stateMachine, _inputReader, mover, _animation);
+        State jumpState = new PlayerJumpState(_stateMachine, jumper, _animation);
+        State inAirState = new PlayerInAirState(_stateMachine, _inputReader, _animation);
+
+        Transition inAirTransition = new InAirTransition(inAirState, _groundDetector);
+        Transition jumpTransition = new JumpTransition(jumpState, _inputReader, _groundDetector);
+        Transition moveTransition = new MoveTransition(moveState, _groundDetector);
+
+        moveState.AddUpdateTransition(inAirTransition);
+        moveState.AddFixedUpdateTransition(jumpTransition);
+        jumpState.AddFixedUpdateTransition(inAirTransition);
+        inAirState.AddUpdateTransition(moveTransition);
+
+        _stateMachine.ChangeState(moveState);
     }
 
     private void Update()

@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private EnemyAnimationEvents _animation;
 
-    private EnemyStateMachine _stateMachine;
+    private StateMachine _stateMachine;
 
     private void Awake()
     {
@@ -14,9 +14,10 @@ public class Enemy : MonoBehaviour
         Mover mover = GetComponent<Mover>();
 
         _stateMachine = new();
-        _stateMachine.AddState(new EnemyPatrolState(_stateMachine, mover, route, _animation));
 
-        _stateMachine.ChangeState(EnemyStateType.Patrol);
+        State patrolState = new EnemyPatrolState(_stateMachine, mover, route, _animation);
+
+        _stateMachine.ChangeState(patrolState);
         StartCoroutine(Sleep());
     }
 

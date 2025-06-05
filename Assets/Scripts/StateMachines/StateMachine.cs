@@ -1,48 +1,21 @@
-using System.Collections.Generic;
-
-public class StateMachine<T>
+public class StateMachine : IStateChanger
 {
-    protected Dictionary<T, State<T>> States;
-    protected State<T> CurrentState;
+    protected State _currentState;
 
-    public StateMachine()
+    public void ChangeState(State nextState)
     {
-        States = new();
-    }
-
-    public void AddState(State<T> state)
-    {
-        States[state.Id] = state;
-    }
-
-    public bool TryGetState(T id, out State<T> state)
-    {
-        state = GetState(id);
-
-        return state != null;
-    }
-
-    public State<T> GetState(T id)
-    {
-        States.TryGetValue(id, out State<T> state);
-
-        return state;
-    }
-
-    public void ChangeState(T id)
-    {
-        CurrentState?.Exit();
-        CurrentState = GetState(id);
-        CurrentState?.Enter();
+        _currentState?.Exit();
+        _currentState = nextState;
+        _currentState?.Enter();
     }
 
     public void Update()
     {
-        CurrentState?.Update();
+        _currentState?.Update();
     }
 
     public void FixedUpdate()
     {
-        CurrentState?.FixedUpdate();
+        _currentState?.FixedUpdate();
     }
 }
