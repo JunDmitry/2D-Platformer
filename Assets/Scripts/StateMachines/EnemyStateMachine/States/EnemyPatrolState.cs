@@ -1,31 +1,17 @@
 using UnityEngine;
 
-public class EnemyPatrolState : State
+public class EnemyPatrolState : EnemyMoveState
 {
-    private const float LeftDirection = -1f;
-    private const float RightDirection = 1f;
-
-    private readonly Mover _mover;
     private readonly Route _route;
-    private readonly EnemyAnimationEvents _animation;
 
-    public EnemyPatrolState(IStateChanger stateMachine, Mover mover, Route route, EnemyAnimationEvents animation)
-        : base(stateMachine)
+    public EnemyPatrolState(IStateChanger stateMachine, Mover mover, EnemyAnimationEvents animation, Route route)
+        : base(stateMachine, mover, animation)
     {
-        _mover = mover;
         _route = route;
-        _animation = animation;
     }
 
-    protected override void OnUpdating()
+    protected override Vector2 GetTarget()
     {
-        base.OnUpdating();
-
-        float positionX = _mover.transform.position.x;
-        Vector2 target = _route.GetTarget();
-        float direction = (target.x - positionX) < 0 ? LeftDirection : RightDirection;
-
-        _animation.SetDirection(direction);
-        _mover.Move(direction);
+        return _route.GetTarget();
     }
 }

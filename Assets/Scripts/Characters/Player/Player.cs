@@ -1,36 +1,28 @@
-using Assets.Scripts.StateMachine.PlayerStates;
 using UnityEngine;
 
-[RequireComponent(typeof(Mover), typeof(Jumper))]
-public class Player : MonoBehaviour
+[RequireComponent(typeof(Mover), typeof(Jumper), typeof(Health))]
+public class Player : MonoBehaviour, IDamageable
 {
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private GroundDetector _groundDetector;
     [SerializeField] private PlayerAnimationEvents _animation;
 
-    private StateMachine _stateMachine;
+    [SerializeField] private Attacker _attacker;
+    [SerializeField] private float _attackSpeed;
 
-    private void Start()
+    private StateMachine _stateMachine;
+    private Health _health;
+
+    private void Awake()
     {
+        _animation.OnDeath += () => gameObject.SetActive(false);
+
+        _health = GetComponent<Health>();
         Mover mover = GetComponent<Mover>();
         Jumper jumper = GetComponent<Jumper>();
 
-        _stateMachine = new();
-
-        State moveState = new PlayerMovementState(_stateMachine, _inputReader, mover, _animation);
-        State jumpState = new PlayerJumpState(_stateMachine, jumper, _animation);
-        State inAirState = new PlayerInAirState(_stateMachine, _inputReader, _animation);
-
-        Transition inAirTransition = new InAirTransition(inAirState, _groundDetector);
-        Transition jumpTransition = new JumpTransition(jumpState, _inputReader, _groundDetector);
-        Transition moveTransition = new MoveTransition(moveState, _groundDetector);
-
-        moveState.AddUpdateTransition(inAirTransition);
-        moveState.AddFixedUpdateTransition(jumpTransition);
-        jumpState.AddFixedUpdateTransition(inAirTransition);
-        inAirState.AddUpdateTransition(moveTransition);
-
-        _stateMachine.ChangeState(moveState);
+        PlayerStateMachineFactory factory = new();
+        _stateMachine = factory.Create(_inputReader, mover, jumper, _animation, _attacker, _groundDetector, _attackSpeed);
     }
 
     private void Update()
@@ -41,5 +33,13 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         _stateMachine.FixedUpdate();
+    }
+
+    public void TakeDamage(float damage)
+    {
+        _health.TakeDamage(damage);
+
+        if (_health.Current == 0)
+            _animation.SetDie();
     }
 }
