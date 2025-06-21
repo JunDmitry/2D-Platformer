@@ -1,23 +1,28 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Mover), typeof(Route))]
-public class Enemy : MonoBehaviour
+[RequireComponent(typeof(Mover), typeof(Route), typeof(Health))]
+public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] private EnemyAnimationEvents _animation;
+    [SerializeField] private Attacker _attacker;
+    [SerializeField] private PlayerSearcher _playerSearcher;
+    [SerializeField] private float _attackSpeed;
 
     private StateMachine _stateMachine;
+    private Health _health;
 
     private void Awake()
     {
+        _animation.OnDeath += () => Destroy(gameObject);
+
+        _health = GetComponent<Health>();
         Route route = GetComponent<Route>();
         Mover mover = GetComponent<Mover>();
 
-        _stateMachine = new();
+        EnemyStateMachineFactory factory = new();
+        _stateMachine = factory.Create(mover, route, _playerSearcher, _attacker, _attackSpeed, _animation);
 
-        State patrolState = new EnemyPatrolState(_stateMachine, mover, route, _animation);
-
-        _stateMachine.ChangeState(patrolState);
         StartCoroutine(Sleep());
     }
 
@@ -29,6 +34,14 @@ public class Enemy : MonoBehaviour
     private void FixedUpdate()
     {
         _stateMachine.FixedUpdate();
+    }
+
+    public void TakeDamage(float damage)
+    {
+        _health.TakeDamage(damage);
+
+        if (_health.Current == 0)
+            _animation.SetDie();
     }
 
     private IEnumerator Sleep(int countFrame = 2)
