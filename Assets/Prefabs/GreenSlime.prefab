@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 5656404347322873722}
   - component: {fileID: 1854870243739033583}
   - component: {fileID: 928528922909816483}
-  - component: {fileID: 5017012110517799937}
   - component: {fileID: 1947556132958374738}
+  - component: {fileID: 5017012110517799937}
   m_Layer: 6
   m_Name: GreenSlime
   m_TagString: Untagged
@@ -144,19 +144,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 0.5
---- !u!114 &5017012110517799937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2887647382060404915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9093df288fb666408e7db7e537688b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _max: 100
 --- !u!114 &1947556132958374738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,7 +160,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _range: 0.75
-  _secondsForSearch: 4
+--- !u!114 &5017012110517799937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2887647382060404915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a53b13230b003a4eaa1ff71b128de25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _max: 100
 --- !u!1 &3668344826113710906
 GameObject:
   m_ObjectHideFlags: 0

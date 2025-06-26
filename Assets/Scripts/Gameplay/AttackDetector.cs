@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackDetector : MonoBehaviour
+public class AttackDetector : MonoBehaviour, IOffsetChanger
 {
     [SerializeField] private LayerMask _layer;
     [SerializeField, Min(0)] private float _range;
@@ -19,6 +19,11 @@ public class AttackDetector : MonoBehaviour
             if (hit.gameObject.TryGetComponent(out IDamageable damageable))
                 yield return damageable;
         }
+    }
+
+    public void ChangeOffsetDirection(Vector2 direction)
+    {
+        _offset *= direction;
     }
 
 #if UNITY_EDITOR

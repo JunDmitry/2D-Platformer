@@ -1,13 +1,17 @@
 using System;
 using UnityEngine;
 
-public class Health : MonoBehaviour, IReplenishable
+public class Health : MonoBehaviour, IHealthChangeHandler
 {
     [SerializeField, Min(1f)] private float _max = 1f;
 
-    private float _current;
+    public event Action<float> CurrentChanged;
 
-    public float Current => _current;
+    public event Action<float> MaxChanged;
+
+    public float Current { get; private set; }
+
+    public float Max => _max;
 
     private void Awake()
     {
@@ -16,7 +20,8 @@ public class Health : MonoBehaviour, IReplenishable
 
     public void Reset()
     {
-        _current = _max;
+        Current = _max;
+        CurrentChanged?.Invoke(Current);
     }
 
     public void TakeDamage(float damage)
@@ -24,7 +29,8 @@ public class Health : MonoBehaviour, IReplenishable
         if (damage < 0)
             throw new ArgumentException("Damage cannot be less than 0!", nameof(damage));
 
-        _current = Math.Max(_current - damage, 0);
+        Current = Math.Max(Current - damage, 0);
+        CurrentChanged?.Invoke(Current);
     }
 
     public void Replenish(float count)
@@ -32,6 +38,7 @@ public class Health : MonoBehaviour, IReplenishable
         if (count < 0)
             throw new ArgumentException("Replenish health count cannot be less than 0!", nameof(count));
 
-        _current = Math.Min(_current + count, _max);
+        Current = Math.Min(Current + count, _max);
+        CurrentChanged?.Invoke(Current);
     }
 }

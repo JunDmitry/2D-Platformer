@@ -14,8 +14,6 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private void Awake()
     {
-        _animation.OnDeath += () => Destroy(gameObject);
-
         _health = GetComponent<Health>();
         Route route = GetComponent<Route>();
         Mover mover = GetComponent<Mover>();
@@ -24,6 +22,16 @@ public class Enemy : MonoBehaviour, IDamageable
         _stateMachine = factory.Create(mover, route, _playerSearcher, _attacker, _attackSpeed, _animation);
 
         StartCoroutine(Sleep());
+    }
+
+    private void OnEnable()
+    {
+        _animation.OnDeath += () => Destroy(gameObject);
+    }
+
+    private void OnDisable()
+    {
+        _animation.OnDeath -= () => Destroy(gameObject);
     }
 
     private void Update()
