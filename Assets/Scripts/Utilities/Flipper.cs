@@ -8,6 +8,13 @@ public class Flipper : MonoBehaviour
 
     private bool _isFlipped = false;
 
+    private IOffsetChanger _offsetChanger;
+
+    private void Awake()
+    {
+        _offsetChanger = GetComponent<IOffsetChanger>();
+    }
+
     private void Update()
     {
         if (IsRequireFlip() == false)
@@ -27,6 +34,7 @@ public class Flipper : MonoBehaviour
         Vector2 position = transform.localPosition;
         position.x *= -1;
 
+        _offsetChanger?.ChangeOffsetDirection(Vector2.left + Vector2.up);
         transform.Rotate(_rotation, Space.Self);
         transform.localPosition = position;
     }
