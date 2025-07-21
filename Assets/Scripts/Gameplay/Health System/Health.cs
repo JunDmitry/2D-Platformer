@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Health : MonoBehaviour, IHealthChangeHandler
+public class Health : MonoBehaviour
 {
     [SerializeField, Min(1f)] private float _max = 1f;
 

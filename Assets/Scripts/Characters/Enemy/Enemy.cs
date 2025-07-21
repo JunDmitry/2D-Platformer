@@ -44,12 +44,15 @@ public class Enemy : MonoBehaviour, IDamageable
         _stateMachine.FixedUpdate();
     }
 
-    public void TakeDamage(float damage)
+    public float TakeDamage(float damage)
     {
+        float oldHealth = _health.Current;
         _health.TakeDamage(damage);
 
         if (_health.Current == 0)
             _animation.SetDie();
+
+        return oldHealth - _health.Current;
     }
 
     private IEnumerator Sleep(int countFrame = 2)

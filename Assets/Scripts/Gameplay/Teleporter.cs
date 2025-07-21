@@ -16,7 +16,6 @@ public class Teleporter : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out Player player) == false)
             return;
 
-        Debug.Log("Player was teleport to base location.");
         player.transform.position = _teleportPosition.position;
     }
 }
