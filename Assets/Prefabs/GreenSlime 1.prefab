@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f578ee51a063d341a7965a63201a1a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 2720189585082193550}
+  _health: {fileID: 4323142894574637300}
   _sliderUI: {fileID: 3839484535815893708}
   _smoothDuration: 0.5
 --- !u!1 &2827280017066425611
@@ -640,7 +640,7 @@ GameObject:
   - component: {fileID: 7281240134523693982}
   - component: {fileID: 1865132993579222946}
   - component: {fileID: 7017871440970870157}
-  - component: {fileID: 2720189585082193550}
+  - component: {fileID: 4323142894574637300}
   m_Layer: 6
   m_Name: GreenSlime 1
   m_TagString: Untagged
@@ -788,7 +788,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _range: 0.75
---- !u!114 &2720189585082193550
+--- !u!114 &4323142894574637300
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
