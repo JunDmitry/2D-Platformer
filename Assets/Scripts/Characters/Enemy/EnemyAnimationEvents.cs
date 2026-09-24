@@ -35,4 +35,9 @@ public class EnemyAnimationEvents : MonoBehaviour
     {
         OnDeath?.Invoke();
     }
+
+    private void Initercat()
+    {
+
+    }
 }

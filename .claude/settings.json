@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "additionalDirectories": [
+      "C:/Users/scele/.claude/skills/architector-role",
+      "C:/Users/scele/.claude/skills/coder-role",
+      "C:/Users/scele/.claude/skills/mcp-workflow",
+      "C:/Users/scele/.claude/skills/system-lifecycle",
+      "I:/Code_Source/UnityProjects/2D Platformer/docs"
+    ]
+  }
+}

@@ -1,10 +1,9 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
 namespace Assets.Scripts.Gameplay.Skill_System
 {
-    public class NearestVampireDamageEffect : MonoBehaviour
+    public class NearestVampireDamageEffect : MonoBehaviour, ISkillEffect
     {
         [SerializeField] private AuraSingleDetector _detector;
         [SerializeField, Min(0f)] private float _damagePerSecond;
@@ -14,15 +13,12 @@ namespace Assets.Scripts.Gameplay.Skill_System
 
         public IEnumerator Run(ExecutorData executorData)
         {
-            float dealtDamage;
+            IDamageable target = _detector.FindNearestTarget(executorData);
 
-            foreach (IDamageable unit in _detector.FoundTargets(executorData))
+            if (target != null)
             {
-                if (unit != null)
-                {
-                    dealtDamage = unit.TakeDamage(_damagePerSecond * Time.deltaTime);
-                    executorData.ExecutorReplenishable.Replenish(dealtDamage * _healingPercentage);
-                }
+                float dealtDamage = target.TakeDamage(_damagePerSecond * Time.deltaTime);
+                executorData.ExecutorReplenishable.Replenish(dealtDamage * _healingPercentage);
             }
 
             yield return _instant;
