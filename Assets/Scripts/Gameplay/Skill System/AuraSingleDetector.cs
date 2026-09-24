@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Gameplay.Skill_System
@@ -10,7 +9,7 @@ namespace Assets.Scripts.Gameplay.Skill_System
 
         public float Radius => _radius;
 
-        public IEnumerable<IDamageable> FoundTargets(ExecutorData executorData)
+        public IDamageable FindNearestTarget(ExecutorData executorData)
         {
             Collider2D[] hits = Physics2D.OverlapCircleAll(executorData.Position, _radius, _layerToEffect);
             float targetDistance = float.MaxValue;
@@ -31,7 +30,7 @@ namespace Assets.Scripts.Gameplay.Skill_System
                 }
             }
 
-            yield return target;
+            return target;
         }
 
         private void OnDrawGizmosSelected()

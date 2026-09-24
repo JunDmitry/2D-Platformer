@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Mover), typeof(Route), typeof(Health))]
-public class Enemy : MonoBehaviour, IDamageable
+public class Enemy : MonoBehaviour, IDamageable, IKnockbackable
 {
     [SerializeField] private EnemyAnimationEvents _animation;
     [SerializeField] private Attacker _attacker;
@@ -11,15 +11,16 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private StateMachine _stateMachine;
     private Health _health;
+    private Mover _mover;
 
     private void Awake()
     {
         _health = GetComponent<Health>();
         Route route = GetComponent<Route>();
-        Mover mover = GetComponent<Mover>();
+        _mover = GetComponent<Mover>();
 
         EnemyStateMachineFactory factory = new();
-        _stateMachine = factory.Create(mover, route, _playerSearcher, _attacker, _attackSpeed, _animation);
+        _stateMachine = factory.Create(_mover, route, _playerSearcher, _attacker, _attackSpeed, _animation);
 
         StartCoroutine(Sleep());
     }
@@ -53,6 +54,11 @@ public class Enemy : MonoBehaviour, IDamageable
             _animation.SetDie();
 
         return oldHealth - _health.Current;
+    }
+
+    public void ApplyKnockback(Vector2 direction, float speedPerSecond, float durationInSeconds)
+    {
+        _mover.ApplyKnockback(direction, speedPerSecond, durationInSeconds);
     }
 
     private IEnumerator Sleep(int countFrame = 2)

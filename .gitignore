@@ -83,3 +83,13 @@ crashlytics-build.properties
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db.meta
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers.meta
+
+# system-lifecycle: agent workspace (managed block, do not edit)
+docs/.system/
+docs/coder/
+docs/architecture/orientation/
+docs/architecture/tasks/
+docs/architecture/architect-inbox/
+docs/architecture/mcp-tasks/
+docs/mcp/
+# end system-lifecycle block
