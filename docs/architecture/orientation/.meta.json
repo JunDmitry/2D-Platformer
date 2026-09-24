@@ -1,0 +1,15 @@
+{
+  "version": 3,
+  "updated_at": "2026-09-24T03:53:48Z",
+  "git_commit": "1a33243",
+  "updated_by_session": "sess-2026-09-24-035348-25848",
+  "subfiles_hash": {
+    "index.md": "sha256:e9003b40872096acac6ac2a79acf63d2a48387351d51823395569b75b2dcbfc7",
+    "project-map.md": "sha256:9e23e96b56545277f60a08c8a3d6da0f0a9d6cbe3b36ded2a13f7ec88ee665e6",
+    "modules.md": "sha256:2bf9e35b6035bc40488566eae304e102b096f7ea39d0df29469ac5a99a4e851f",
+    "paradigms.md": "sha256:e9dff5f4b6a2f872d83bd2645e046433c281f36971b29e5b7f55134e6e30b16e",
+    "tech-stack.md": "sha256:89bb2ced60c181780d99d82762e8d94e8440df89b8fbbfafd7a4174f21948dcb",
+    "conventions.md": "sha256:ed71c472e7fc984bc88f32515b334103cce0bab21a3de18b8e2e67ea6c8de6d0",
+    "hotspots.md": "sha256:a84490e443cd7ffa61a0192ab7c6b32c9bc078e839cf7bb4b8cdafb94867e86d"
+  }
+}
